@@ -22,6 +22,17 @@
 
 			if(!mysql_query($querystring, $mySqlConnection));
 				echo "Konnte Datenbank-Tabelle users nicht erzeugen: " . mysql_error();
+
+			$querystring = "CREATE TABLE artikel (
+				id int AUTO_INCREMENT,
+				name varchar(40) NOT NULL,
+				beschreibung varchar(255) NOT NULL,
+				preis float NOT NULL,
+				PRIMARY KEY(id)	
+			);";
+
+			if(!mysql_query($querystring, $mySqlConnection));
+				echo "Konnte Datenbank-Tabelle artikel nicht erzeugen: " . mysql_error();
 		} else {
 			echo "Konnte Datenbank-Schema mit Namen $dbschema nicht auswählen: " . mysql_error();
 		}
