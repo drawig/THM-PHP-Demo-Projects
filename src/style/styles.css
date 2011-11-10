@@ -1,0 +1,54 @@
+
+body {
+
+}
+
+#wrapper {
+margin-top:200px;
+padding-top:auto;
+}
+
+#title {
+height:30px;
+font-family: Arial, Verdana, Tahoma;
+font-size:22px;
+text-align:center;
+}
+
+#navigation {
+width:500px;
+height:230px;
+padding:10px;
+margin:auto;
+color:orange;
+border:2px dotted #80BA24;
+}
+
+#shop {
+margin-top:30px;
+text-align:center;
+width:50%;
+height:170px;	
+float:left;
+color:black;
+}
+
+#project {
+margin-top:30px;
+text-align:center;
+width:50%;	
+float:right;
+color:black;
+height:170px;
+}
+
+#navigation a{
+font-size:20px;
+text-decoration:none;
+color:orange;
+}
+
+#navigation a:hover{
+text-decoration:underline;
+color:#80BA24;
+}
