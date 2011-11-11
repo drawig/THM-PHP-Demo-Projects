@@ -2,9 +2,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <?php
-	include('../php/User.php');
+	include('../php/LoginService.php');
 
 	session_start();
+
+	if(isset($_POST['name']) && isset($_POST['passwort'])) {
+		$userName = $_POST['name'];
+		$password = $_POST['passwort'];
+
+		if(!LoginService::login($userName, $password))
+			header("Location: shop.php");
+	}
+
 	$loggedIn = isset($_SESSION['user']);
 
 	if($loggedIn) {
@@ -36,23 +45,23 @@
 			<div id="login">
 				<?php
 					if(!$loggedIn) {
-						$form = "<form name=\"loginform\" method=\"post\" action=\"../php/loginscript.php\">
-							<div id=\"labels\">
+						$form = '<form name="loginform" method="post" action="shop.php">
+							<div id="labels">
 								Name:<br/>
 								Passwort:<br/>
 							</div>
 				
-							<div id=\"fields\">
-								<input name=\"name\" type=\"text\" size=\"18\" /> <br/>
-								<input name=\"passwort\" type=\"password\" size=\"18\" /><br/>
+							<div id="fields">
+								<input name="name" type="text" size="18" /> <br/>
+								<input name="passwort" type="password" size="18" /><br/>
 							</div>
 				
-							<div id=\"button\">
+							<div id="button">
 								<br>
-								<input name=\"login\" type=\"button\" value=\"Log In\"/>
+								<input name="login" type="submit" value="Log In"/>
 							</div>				
 					
-						</form>";
+						</form>';
 					} else {
 						$form = "Willkommen, $userName<br/>";
 					}

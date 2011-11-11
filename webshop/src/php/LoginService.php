@@ -1,6 +1,5 @@
 <?php
 
-	include('User.php');
 	include('DatabaseAdapter.php');
 
 	/**
