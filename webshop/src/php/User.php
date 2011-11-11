@@ -15,7 +15,7 @@
 		 * @param string Der Benutzername dieses Benutzers.
 		 */
 		function __construct($name) {
-			$mName = $name;
+			$this->mName = $name;
 		}
 
 		/**
@@ -24,7 +24,7 @@
 		 * @return string Den Benutzernamen dieses User Objektes.
 		 */
 		public function getName() {
-			return $mName;
+			return $this->mName;
 		}
 	}
 ?>
