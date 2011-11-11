@@ -1,6 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?php echo '<? xml version="1.0" encoding="UTF-8" ?>'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<?php
+	include('../php/User.php');
+
+	session_start();
+	$loggedIn = isset($_SESSION['user']);
+
+	if($loggedIn) {
+		$user = unserialize($_SESSION['user']);
+		$userName = $user->getName();
+	} 
+?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
@@ -23,23 +34,31 @@
 			</div>
 			</ul>
 			<div id="login">
-				<form name="loginform" method="post" action="../php/shoLoginService.php">
-				<div id="labels">
-					Name:<br/>
-					Passwort:<br/>
-				</div>
+				<?php
+					if(!$loggedIn) {
+						$form = "<form name=\"loginform\" method=\"post\" action=\"../php/shoLoginService.php\">
+							<div id=\"labels\">
+								Name:<br/>
+								Passwort:<br/>
+							</div>
 				
-				<div id="fields">
-					<input name="name" type="text" size="18" /> <br/>
-					<input name="passwort" type="password" size="18" /><br/>
-				</div>
+							<div id=\"fields\">
+								<input name=\"name\" type=\"text\" size=\"18\" /> <br/>
+								<input name=\"passwort\" type=\"password\" size=\"18\" /><br/>
+							</div>
 				
-				<div id="button">
-					<br>
-					<input name="login" type="button" value="Log In"/>
-				</div>				
+							<div id=\"button\">
+								<br>
+								<input name=\"login\" type=\"button\" value=\"Log In\"/>
+							</div>				
 					
-				</form>
+						</form>";
+					} else {
+						$form = "Willkommen, $userName<br/>";
+					}
+
+					echo $form; 
+				?>
 
 			</div>
 			
