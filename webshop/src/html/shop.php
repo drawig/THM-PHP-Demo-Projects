@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
 		<link rel="stylesheet" type="text/css" href="../style/styles.css"/>
-		<title>WebShop - Warenkorb</title>
+		<title>WebShop</title>
 	</head>
 	
 	<body>
@@ -23,7 +23,7 @@
 			</div>
 			</ul>
 			<div id="login">
-			<form name="loginform" method="post" action="../php/LoginService.php">
+				<form name="loginform" method="post" action="../php/shoLoginService.php">
 				<div id="labels">
 					Name:<br/>
 					Passwort:<br/>
@@ -46,7 +46,29 @@
 		</div>
 		
 		<div id="content">
-			Warenkorb
+			Artikeluebersicht
+			<div class="entry">
+				<div class="pic">	
+					<img src="http://images-5.findicons.com/files/icons/252/apples/512/imac_mac_archigraphs.png" width="220" height="220">
+				</div>
+			
+				<div class="description">
+					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+					no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				</div>
+			
+				<div class="options">
+				<b>Artikeloptionen:</b><br><br>
+				<form name="addform1" method="post" action="../php/checkAdd.php">
+					<input name="anzahl" type="text" size="2" />  
+					<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
+				</form>
+					
+				</div>
+			</div>
+			
 			<div class="entry">
 				<div class="pic">
 					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
@@ -61,45 +83,13 @@
 			
 				<div class="options">
 					<b>Artikeloptionen:</b><br><br>
-				<form name="optionform" method="post" action="../php/checkKorb.php">
-					<input name="anzahl" type="text" value="3" size="2" />  
-					<input name="update" type="button" value="Anzahl aendern"/>
-					<input name="del" type="button" value="Entfernen"/>
+				<form name="addform2" method="post" action="../php/checkAdd.php">
+					<input name="anzahl" type="text" size="2" />  
+					<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
 				</form>
 				</div>
 			</div>
-			
-			<div class="entry">
-				<div class="pic">
-					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
-				</div>
-			
-				<div class="description">
-					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-					no sea takimata sanctus est Lorem ipsum dolor sit amet.
-				</div>
-			
-				<div class="options">
-					<b>Artikeloptionen:</b><br><br>
-				<form name="optionform" method="post" action="../php/checkKorb.php">
-					<input name="anzahl" type="text" value="1" size="2" />  
-					<input name="update" type="button" value="Anzahl aendern"/>
-					<input name="del" type="button" value="Entfernen"/>
-				</form>
-				</div>
-			</div>
-			
-						
-			<div id="order">
-				Bestellung abschicken?
-				<form name="orderform" method="post" action="../php/checkBestellung.php">
-				<input name="bestellen" type="button" value="Bestellung senden"/>
-				<input name="abbrechen" type="button" value="Bestellung abbrechen"/>
-				</form>
-			</div>
-			
+
 			
 		</div>
 		
