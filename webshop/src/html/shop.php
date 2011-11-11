@@ -36,7 +36,7 @@
 			<div id="login">
 				<?php
 					if(!$loggedIn) {
-						$form = "<form name=\"loginform\" method=\"post\" action=\"../php/shoLoginService.php\">
+						$form = "<form name=\"loginform\" method=\"post\" action=\"../php/loginscript.php\">
 							<div id=\"labels\">
 								Name:<br/>
 								Passwort:<br/>
