@@ -49,31 +49,57 @@
 			Warenkorb
 			<div class="entry">
 				<div class="pic">
-					Bildchen#1
+					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
 				</div>
 			
 				<div class="description">
-					Beschreibung#1
+					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+					no sea takimata sanctus est Lorem ipsum dolor sit amet.
 				</div>
 			
 				<div class="options">
-					Optionen#1
+					<b>Artikeloptionen:</b><br><br>
+				<form name="optionform" method="post" action="../php/checkKorb.php">
+					<input name="anzahl" type="text" value="3" size="2" />  
+					<input name="update" type="button" value="Anzahl aendern"/>
+					<input name="del" type="button" value="Entfernen"/>
+				</form>
 				</div>
 			</div>
 			
 			<div class="entry">
 				<div class="pic">
-					Bildchen#2
+					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
 				</div>
 			
 				<div class="description">
-					Beschreibung#2
+					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+					no sea takimata sanctus est Lorem ipsum dolor sit amet.
 				</div>
 			
 				<div class="options">
-					Optionen#2
+					<b>Artikeloptionen:</b><br><br>
+				<form name="optionform" method="post" action="../php/checkKorb.php">
+					<input name="anzahl" type="text" value="1" size="2" />  
+					<input name="update" type="button" value="Anzahl aendern"/>
+					<input name="del" type="button" value="Entfernen"/>
+				</form>
 				</div>
 			</div>
+			
+						
+			<div id="order">
+				Bestellung abschicken?
+				<form name="orderform" method="post" action="../php/checkBestellung.php">
+				<input name="bestellen" type="button" value="Bestellung senden"/>
+				<input name="abbrechen" type="button" value="Bestellung abbrechen"/>
+				</form>
+			</div>
+			
 			
 		</div>
 		
