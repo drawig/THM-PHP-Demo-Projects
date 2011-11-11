@@ -23,8 +23,24 @@
 			</div>
 			</ul>
 			<div id="login">
-			Login<br>
-			Platzhalter
+			<form name="loginform" method="post" action="../php/checklogin.php">
+				<div id="labels">
+					Name:<br/>
+					Passwort:<br/>
+				</div>
+				
+				<div id="fields">
+					<input name="name" type="text" size="18" /> <br/>
+					<input name="passwort" type="text" size="18" /><br/>
+				</div>
+				
+				<div id="button">
+					<br>
+					<input name="login" type="button" value="Log In"/>
+				</div>				
+					
+				</form>
+
 			</div>
 			
 		</div>
