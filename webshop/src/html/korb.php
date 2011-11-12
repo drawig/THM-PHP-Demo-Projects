@@ -2,10 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <?php
+	include('../php/User.php');
+
 	session_start();
 
-	if(!isset($_SESSION['user']))
+	if(!isset($_SESSION['user'])) {
 		header("Location: noaccess.html");
+	} else {
+		$user = unserialize($_SESSION['user']);
+		$userName = $user->getName();
+	}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
 	<head>
@@ -29,24 +35,16 @@
 			</div>
 			</ul>
 			<div id="login">
-			<form name="loginform" method="post" action="../php/LoginService.php">
-				<div id="labels">
-					Name:<br/>
-					Passwort:<br/>
-				</div>
-				
-				<div id="fields">
-					<input name="name" type="text" size="18" /> <br/>
-					<input name="passwort" type="password" size="18" /><br/>
-				</div>
-				
-				<div id="button">
-					<br>
-					<input name="login" type="button" value="Log In"/>
-				</div>				
-					
-				</form>
-
+			<?php
+				echo	"Willkommen, $userName" .
+					'<form name="logoutform" method="post" action="shop.php">
+						<div id="button">
+							<br/>
+							<input name="logout" type="submit" value="Log Out"/>
+						</div>
+						<input name="unset" type="hidden"/>
+					</form>';
+			?>
 			</div>
 			
 		</div>
