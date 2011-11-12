@@ -1,4 +1,4 @@
-<?php echo '<? xml version="1.0" encoding="UTF-8" ?>'; ?>
+<?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <?php
@@ -44,7 +44,7 @@
 				<?php
 					if($loggedIn) {
 						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>
-							<li><a href="korb.html">Warenkorb</a></li>
+							<li><a href="korb.php">Warenkorb</a></li>
 							<li><a href="shop.php">Test#1</a></li>
 							<li><a href="shop.php">Test#2</a></li>';
 					} else {
