@@ -1,6 +1,7 @@
 <?php
 
 	include('User.php');
+	include('Artikel.php');
 
 	/**
 	 * Diese Klasse bietet Funktionen, mit denen vom Webshop häufig durchgeführte Datenbank-Zugriffe
@@ -9,8 +10,8 @@
 	class DatabaseAdapter {
 
 		//Hier richtige Daten eingeben.
-		private static $mDBHost = "";
-		private static $mDBUser = "";
+		private static $mDBHost = "localhost";
+		private static $mDBUser = "root";
 		private static $mDBPassword = "";
 
 		/**
@@ -48,5 +49,53 @@
 
 			return NULL;
 		}
+		
+		/**
+		* Liest saemtliche eingetragenen Artikel aus der Datenbank aus, 
+		* speichert sie in einem (assoziativem) Array und liefert dieses zuerueck.
+		*
+		*/
+		public static function getArtikel() {
+			$returnArray[] = array();
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=webshop", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+
+				$sth = $dbh->prepare("SELECT * FROM artikel;");
+
+				$sth->execute();
+
+				//Liefert ein Array welches wiederrum weitere Arrays beeinhaltet, welche die key + value paare beeinhalten
+				$return = $sth->fetchAll();
+
+				if(!$return)
+					return NULL;
+
+				
+				//Durchlaeuft das aeußere Array (welches Arrays enthaelt)
+				foreach ($return as $entry) {
+					$count = 0;
+					$tempArray = array();
+					
+					//Durchlaeuft das innere Array (welches key-value-paare enthaelt)
+					foreach($entry as $key => $value) {
+						$tempArray[] = $value;
+					}
+					
+					//Neue Artikel erstellen und dem returnArray hinzufuegen
+					$artikel = new Artikel($tempArray[0],$tempArray[1],$tempArray[2],$tempArray[3],$tempArray[4]);
+					$returnArray[$count++] = $artikel;
+				}
+					
+
+				$dbh = NULL;
+				
+				return $returnArray;
+				
+			} catch (Exception $e) {}
+
+			return NULL;
+		}
+		
 	}
 ?>
