@@ -17,6 +17,8 @@
 		private $mBeschreibung;
 		/** Der Preis des Artikels. */
 		private $mPreis;
+		/** Der Pfad zum Bild vom Artikel. */
+		private $mBildpfad;
 
 		/**
 		 * Erstellt einen neuen Artikel mit den angegebenen Attributen.
@@ -25,12 +27,14 @@
 		 * @param string Der Titel des erstellten Artikels.
 		 * @param string Die beschreibung Die Beschreibung des erstellten Artikels.
 		 * @param float Der Preis des erstellten Artikels.
+		 * @param string Der Pfad zum Bild des erstellten Artikels.
 		 */
-		function __construct($artNr, $titel, $beschreibung, $preis) {
+		function __construct($artNr, $titel, $beschreibung, $preis, $bildpfad = "") {
 			$this->mArtNr = $artNr;
 			$this->mTitel = $titel;
 			$this->mBeschreibung = $beschreibung;
 			$this->mPreis = $preis;
+			$this->mBildpfad = $bildpfad;
 		}
 
 		/**
@@ -67,6 +71,15 @@
 		 */
 		public function getPreis() {
 			return $this->mPreis;
+		}
+
+		/**
+		 * Gibt den Pfad zum Bild des Artikels zurück.
+		 *
+		 * @return string Den Pfad zum Bild des Artikels.
+		 */
+		public function getBildpfad() {
+			return $this->mBildpfad;
 		}
 	}
 ?>

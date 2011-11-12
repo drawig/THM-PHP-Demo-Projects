@@ -31,6 +31,7 @@
 				name varchar(40) NOT NULL,
 				beschreibung varchar(255) NOT NULL,
 				preis float NOT NULL,
+				bildpfad text,
 				PRIMARY KEY(id)	
 			);";
 
