@@ -38,7 +38,7 @@
 		 *
 		 * @return string Die Artikelnummer dieses Artikels.
 		 */
-		function getArtNr() {
+		public function getArtNr() {
 			return $this->mArtNr;
 		}
 
@@ -47,7 +47,7 @@
 		 *
 		 * @return string Den Titel dieses Artikels.
 		 */
-		function getTitel() {
+		public function getTitel() {
 			return $this->mTitel;
 		}
 
@@ -56,7 +56,7 @@
 		 *
 		 * @return string Die Beschreibung dieses Artikels.
 		 */
-		function getBeschreibung() {
+		public function getBeschreibung() {
 			return $this->mBeschreibung;
 		}
 
@@ -65,7 +65,7 @@
 		 *
 		 * @return float Den Preis dieses Artikels.
 		 */
-		function getPreis() {
+		public function getPreis() {
 			return $this->mPreis;
 		}
 	}
