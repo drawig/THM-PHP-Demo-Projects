@@ -6,6 +6,11 @@
 
 	session_start();
 
+	if(isset($_POST['unset'])) {
+		session_unset(); 
+		session_destroy();
+	}
+
 	if(isset($_POST['name']) && isset($_POST['passwort'])) {
 		$userName = $_POST['name'];
 		$password = $_POST['passwort'];
@@ -36,10 +41,18 @@
 			
 			<div id="links">
 			<ul>
-			<li><a href="shop.php">Artikeluebersicht</a></li>
-			<li><a href="korb.html">Warenkorb</a></li>
-			<li><a href="shop.php">Test#1</a></li>
-			<li><a href="shop.php">Test#2</a></li>
+				<?php
+					if($loggedIn) {
+						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>
+							<li><a href="korb.html">Warenkorb</a></li>
+							<li><a href="shop.php">Test#1</a></li>
+							<li><a href="shop.php">Test#2</a></li>';
+					} else {
+						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>';
+					}
+					
+					echo $html;	
+				?>
 			</div>
 			</ul>
 			<div id="login">
@@ -63,7 +76,14 @@
 					
 						</form>';
 					} else {
-						$form = "Willkommen, $userName<br/>";
+						$form = "Willkommen, $userName" .
+							'<form name="logoutform" method="post" action="shop.php">
+								<div id="button">
+									<br/>
+									<input name="logout" type="submit" value="Log Out"/>
+								</div>
+								<input name="unset" type="hidden"/>
+							</form>';
 					}
 
 					echo $form; 
@@ -86,15 +106,19 @@
 					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
 					no sea takimata sanctus est Lorem ipsum dolor sit amet.
 				</div>
-			
-				<div class="options">
-				<b>Artikeloptionen:</b><br><br>
-				<form name="addform1" method="post" action="../php/checkAdd.php">
-					<input name="anzahl" type="text" size="2" />  
-					<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
-				</form>
+		
+				<?php	
+					if($loggedIn) {
+						echo 	'<div class="options">
+								<b>Artikeloptionen:</b><br><br>
+								<form name="addform1" method="post" action="../php/checkAdd.php">
+									<input name="anzahl" type="text" size="2" />  
+									<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
+								</form>
 					
-				</div>
+							</div>';
+					}
+				?>
 			</div>
 			
 			<div class="entry">
@@ -109,13 +133,18 @@
 					no sea takimata sanctus est Lorem ipsum dolor sit amet.
 				</div>
 			
-				<div class="options">
-					<b>Artikeloptionen:</b><br><br>
-				<form name="addform2" method="post" action="../php/checkAdd.php">
-					<input name="anzahl" type="text" size="2" />  
-					<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
-				</form>
-				</div>
+				<?php	
+					if($loggedIn) {
+						echo 	'<div class="options">
+								<b>Artikeloptionen:</b><br><br>
+								<form name="addform2" method="post" action="../php/checkAdd.php">
+									<input name="anzahl" type="text" size="2" />  
+									<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
+								</form>
+					
+							</div>';
+					}
+				?>
 			</div>
 
 			
