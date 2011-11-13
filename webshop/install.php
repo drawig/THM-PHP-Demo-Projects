@@ -39,6 +39,14 @@
 
 			$querystring = "INSERT INTO users(username, password) VALUES('$username', '$password');";
 			mysql_query($querystring, $mySqlConnection);
+			
+			//Test-Artikel 1
+			$querystring = "INSERT INTO artikel(id, name, beschreibung, preis, bildpfad) VALUES('1', 'Alienware Laptop', 'lorem ipsum bla', '2000', 'res/alienware.gif');";
+			mysql_query($querystring, $mySqlConnection);
+			
+			//Test-Artikel 2
+			$querystring = "INSERT INTO artikel(id, name, beschreibung, preis, bildpfad) VALUES('2', 'Apple iMac', 'lorem ipsum bla', '4000', 'res/imac_mac_archigraphs.png');";
+			mysql_query($querystring, $mySqlConnection);
 		} else {
 			echo "Konnte Datenbank-Schema mit Namen $dbschema nicht auswählen: " . mysql_error() . "<br/>";
 		}
