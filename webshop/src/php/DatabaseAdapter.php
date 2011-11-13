@@ -56,7 +56,7 @@
 		*
 		*/
 		public static function getArtikel() {
-			$returnArray[] = array();
+			//$returnArray[] = array();
 			try {
 				$dbHost = DatabaseAdapter::$mDBHost;
 				$dbh = new PDO("mysql:host=$dbHost;dbname=webshop", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
@@ -74,20 +74,23 @@
 				
 				//Durchlaeuft das aeußere Array (welches Arrays enthaelt)
 				foreach ($return as $entry) {
-					$count = 0;
 					$tempArray = array();
 					
 					//Durchlaeuft das innere Array (welches key-value-paare enthaelt)
 					foreach($entry as $key => $value) {
-						$tempArray[] = $value;
+						$tempArray[$key] = $value;
 					}
 					
 					//Neue Artikel erstellen und dem returnArray hinzufuegen
-					$artikel = new Artikel($tempArray[0],$tempArray[1],$tempArray[2],$tempArray[3],$tempArray[4]);
-					$returnArray[$count++] = $artikel;
-				}
+					$artikel = new Artikel($tempArray[id],$tempArray[name],$tempArray[beschreibung],$tempArray[preis],$tempArray[bildpfad]);
+					$returnArray[] = $artikel;
 					
-
+				}
+				
+				/* Debug
+				echo '<br><br>';
+				print_r($returnArray); */
+				
 				$dbh = NULL;
 				
 				return $returnArray;

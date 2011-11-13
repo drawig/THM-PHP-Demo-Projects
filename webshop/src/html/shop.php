@@ -1,7 +1,11 @@
-<?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
+<?php 
+	session_start();
+	echo '<?xml version="1.0" encoding="UTF-8"?>'; 
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <?php
+	
 	include('../php/LoginService.php');
 
 	session_start();
@@ -95,6 +99,54 @@
 		
 		<div id="content">
 			Artikeluebersicht
+			
+			<?php
+				$artikel = DatabaseAdapter::getArtikel();
+				
+				foreach ($artikel as $entry) {
+					echo '
+					<div class="entry">
+						<div class="pic">	
+							<img src="http://images-5.findicons.com/files/icons/252/apples/512/imac_mac_archigraphs.png" width="220" height="220">
+						</div>
+			
+						<div class="description">';
+							echo '<b>';
+							echo $entry->getTitel();
+							echo '</b><br><br>';
+							echo $entry->getBeschreibung();
+							echo '<br><br>';
+							echo '<b>Preis:</b>  ';
+							echo $entry->getPreis();
+							echo ' &euro;';
+							
+						echo '
+						</div>';
+		
+							
+							if($loggedIn) {
+								echo 	'<div class="options">
+										<b>Artikeloptionen:</b><br><br>
+										<form name="addform1" method="post" action="../php/checkAdd.php">
+											<input name="anzahl" type="text" size="2" />  
+											<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
+										</form>
+										</div>';
+							}
+						
+					echo '	
+					</div>';
+					
+				
+				}
+			
+			
+			
+			?>
+			
+			
+			
+			
 			<div class="entry">
 				<div class="pic">	
 					<img src="http://images-5.findicons.com/files/icons/252/apples/512/imac_mac_archigraphs.png" width="220" height="220">
