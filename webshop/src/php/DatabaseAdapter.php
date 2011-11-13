@@ -100,5 +100,35 @@
 			return NULL;
 		}
 		
+		/**
+		* Fuegt einen uebergebenen Artikel der Datenbank hinzu
+		*/
+		public static function addArtikel($artikel) {
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=webshop", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+		
+				$sth = $dbh->prepare("INSERT INTO artikel(name, beschreibung, preis, bildpfad) VALUES(?, ?, ?, ?);");
+
+				$sth->bindParam(1, $artikel->getTitel());
+				$sth->bindParam(2, $artikel->getBeschreibung());
+				$sth->bindParam(3, $artikel->getPreis());
+				$sth->bindParam(4, $artikel->getBildpfad());
+							
+				$sth->execute();
+
+				$return = $sth->fetch();
+
+				if(!$return)
+					return NULL;
+
+				$dbh = NULL;
+
+			} catch (Exception $e) {}
+
+			return NULL;
+		}
+		
+		
 	}
 ?>

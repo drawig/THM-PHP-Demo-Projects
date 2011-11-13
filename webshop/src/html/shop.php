@@ -49,8 +49,8 @@
 					if($loggedIn) {
 						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>
 							<li><a href="korb.php">Warenkorb</a></li>
-							<li><a href="shop.php">Test#1</a></li>
-							<li><a href="shop.php">Test#2</a></li>';
+							<li><a href="addArt.php">Neuer Artikel</a></li>
+							<li><a href="shop.php">Test</a></li>';
 					} else {
 						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>';
 					}
@@ -107,7 +107,9 @@
 					echo '
 					<div class="entry">
 						<div class="pic">	
-							<img src="http://images-5.findicons.com/files/icons/252/apples/512/imac_mac_archigraphs.png" width="220" height="220">
+							<img src="../../';
+							echo $entry->getBildpfad();
+							echo '" width="220" height="220">
 						</div>
 			
 						<div class="description">';
