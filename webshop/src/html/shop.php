@@ -28,6 +28,10 @@
 	if($loggedIn) {
 		$user = unserialize($_SESSION['user']);
 		$userName = $user->getName();
+
+		if(isset($_POST['artikelid']) {
+			//TODO: Artikel aus DB lesen, Artikelposi erstellen und in Warenkorb legen. Meldung anzeigen dass geglückt ist.
+		}
 	} 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
@@ -127,11 +131,14 @@
 		
 							
 							if($loggedIn) {
+								$artikelId = $entry->getArtNr();
+
 								echo 	'<div class="options">
 										<b>Artikeloptionen:</b><br><br>
-										<form name="addform1" method="post" action="../php/checkAdd.php">
+										<form name="addform" method="post" action="shop.php">
 											<input name="anzahl" type="text" size="2" />  
-											<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
+											<input name="add" type="submit" value="Zum Warenkorb hinzufuegen"/>
+											<input name="artikelid" type="hidden" value="' . "$artikelId" . '"/>
 										</form>
 										</div>';
 							}
@@ -165,9 +172,9 @@
 					if($loggedIn) {
 						echo 	'<div class="options">
 								<b>Artikeloptionen:</b><br><br>
-								<form name="addform1" method="post" action="../php/checkAdd.php">
+								<form name="addform" method="post" action="../php/checkAdd.php">
 									<input name="anzahl" type="text" size="2" />  
-									<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
+									<input name="add" type="submit" value="Zum Warenkorb hinzufuegen"/>
 								</form>
 					
 							</div>';
