@@ -52,5 +52,14 @@
 		public function getPreis() {
 			return $this->mArtikel->getPreis() * $this->mAnzahl;
 		}
+
+		/**
+		 * Holt die Artikelnummer des Artikels in dieser Artikelposition.
+		 *
+		 * @return string Die Artikelnummer des Artikels in dieser Artikelposition.
+		 */
+		public function getID() {
+			return $this->mArtikel->getArtNr();
+		}
 	}
 ?>
