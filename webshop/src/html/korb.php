@@ -23,6 +23,8 @@
 		} else if(isset($_POST['artikeliddel'])) {
 			$warenkorb->removeArtikelPosition($_POST['artikeliddel']);
 		}
+
+		$_SESSION['user'] = serialize($user);
 	}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
