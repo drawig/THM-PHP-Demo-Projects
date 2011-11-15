@@ -29,8 +29,19 @@
 		$user = unserialize($_SESSION['user']);
 		$userName = $user->getName();
 
-		if(isset($_POST['artikelid']) {
-			//TODO: Artikel aus DB lesen, Artikelposi erstellen und in Warenkorb legen. Meldung anzeigen dass geglückt ist.
+		if(isset($_POST['artikelid']) && isset($_POST['anzahl'])) {
+			$artikel = DatabaseAdapter::getSingleArtikel($_POST['artikelid']);
+
+			if($artikel != NULL) {
+				$warenkorb = $user->getWarenkorb();
+
+				if($warenkorb->contains($artikel->getArtNr())) {
+					$warenkorb->addAnzahl($artikel->getArtNr, $_POST['anzahl']);
+				} else {
+					$artikelPosition = new ArtikelPosition($artikel, $_POST['anzahl']);
+					$warenkorb->addArtikelPosition($artikelPosition);
+				}
+			}
 		}
 	} 
 ?>
