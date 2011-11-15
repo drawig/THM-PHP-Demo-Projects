@@ -102,5 +102,14 @@
 		public function contains($artikelNr) {
 			return isset($this->mArtikelPositionen["$artikelNr"]);
 		}
+
+		/**
+		 * Gibt das Array zurück, welches alle ArtikelPositionen in diesem Warenkorb hält.
+		 *
+		 * @return array Das Array, welches alle ArtikelPositionen in diesem Warenkorb hält.
+		 */
+		public function getArtikelPositionen() {
+			return $this->mArtikelPositionen;
+		}
 	}
 ?>
