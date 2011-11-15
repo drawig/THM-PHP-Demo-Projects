@@ -23,7 +23,7 @@
 		/**
 		 * Erstellt einen neuen Artikel mit den angegebenen Attributen.
 		 *
-		 * @param string Die Artikelnummer des erstellten Artikels.
+		 * @param int Die Artikelnummer des erstellten Artikels.
 		 * @param string Der Titel des erstellten Artikels.
 		 * @param string Die beschreibung Die Beschreibung des erstellten Artikels.
 		 * @param float Der Preis des erstellten Artikels.
@@ -40,7 +40,7 @@
 		/**
 		 * Gibt die Artikelnummer dieses Artikels zurück.
 		 *
-		 * @return string Die Artikelnummer dieses Artikels.
+		 * @return int Die Artikelnummer dieses Artikels.
 		 */
 		public function getArtNr() {
 			return $this->mArtNr;

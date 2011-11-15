@@ -56,7 +56,7 @@
 		/**
 		 * Holt die Artikelnummer des Artikels in dieser Artikelposition.
 		 *
-		 * @return string Die Artikelnummer des Artikels in dieser Artikelposition.
+		 * @return int Die Artikelnummer des Artikels in dieser Artikelposition.
 		 */
 		public function getID() {
 			return $this->mArtikel->getArtNr();
