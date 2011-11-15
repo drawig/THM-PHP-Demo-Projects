@@ -83,7 +83,7 @@
 					}
 					
 					//Neue Artikel erstellen und dem returnArray hinzufuegen
-					$artikel = new Artikel($tempArray[id],$tempArray[name],$tempArray[beschreibung],$tempArray[preis],$tempArray[bildpfad]);
+					$artikel = new Artikel($tempArray['id'],$tempArray['name'],$tempArray['beschreibung'],$tempArray['preis'],$tempArray['bildpfad']);
 					$returnArray[] = $artikel;
 					
 				}
