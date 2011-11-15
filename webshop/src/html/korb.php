@@ -22,6 +22,13 @@
 			$warenkorb->editArtikelPosition($artikelNr, $anzahl);
 		} else if(isset($_POST['artikeliddel'])) {
 			$warenkorb->removeArtikelPosition($_POST['artikeliddel']);
+		} else if(isset($_POST['abbrechen'])) {
+			$user->leerWarenkorb();
+			$warenkorb = $user->getWarenkorb();
+		} else if(isset($_POST['bestellen'])) {
+			$user->leerWarenkorb();
+			$warenkorb = $user->getWarenkorb();
+			header("Location: success.html");
 		}
 
 		$_SESSION['user'] = serialize($user);
@@ -83,13 +90,15 @@
 						<div class="options">
 							<b>Artikeloptionen:</b><br><br>
 							<form name="optionform" method="post" action="korb.php">
-								<input name="anzahl" type="text" value="' . $value->getAnzahl() . '" size="2" />  
-								<input name="update" type="submit" value="Anzahl aendern"/>
-								<input name="artikelid" type="hidden" value="' . $value->getID() . '"/>
-							</form> 
-							<form name="deleteform" method="post" action="korb.php">
-								<input name="del" type="submit" value="Entfernen"/>
-								<input name="artikeliddel" type="hidden" value="' . $value->getID() . '"/>
+								<form name="anzahlform" method="post" action="korb.php">
+									<input name="anzahl" type="text" value="' . $value->getAnzahl() . '" size="2" />  
+									<input name="update" type="submit" value="Anzahl aendern"/>
+									<input name="artikelid" type="hidden" value="' . $value->getID() . '"/>
+								</form> 
+								<form name="deleteform" method="post" action="korb.php">
+									<input name="del" type="submit" value="Entfernen"/>
+									<input name="artikeliddel" type="hidden" value="' . $value->getID() . '"/>
+								</form>
 							</form>
 						</div>
 					</div>';
@@ -98,9 +107,9 @@
 						
 			<div id="order">
 				Bestellung abschicken?
-				<form name="orderform" method="post" action="../php/checkBestellung.php">
-				<input name="bestellen" type="button" value="Bestellung senden"/>
-				<input name="abbrechen" type="button" value="Bestellung abbrechen"/>
+				<form name="orderform" method="post" action="korb.php">
+					<input name="bestellen" type="submit" value="Bestellung senden"/>
+					<input name="abbrechen" type="submit" value="Bestellung abbrechen"/>
 				</form>
 			</div>
 			
