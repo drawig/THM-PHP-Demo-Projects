@@ -41,5 +41,12 @@
 		public function getWarenkorb() {
 			return $this->mWarenkorb;
 		}
+
+		/**
+		 * Leert den Warenkorb dieses Users.
+		 */
+		public function leerWarenkorb() {
+			$this->mWarenkorb = new Warenkorb();		
+		}
 	}
 ?>
