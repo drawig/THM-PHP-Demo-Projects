@@ -70,5 +70,14 @@
 		public function addAnzahl($summand) {
 			$this->mAnzahl += $summand;
 		}
+
+		/**
+		 * Holt die Anzahl des Artikels, der über diese Artikelposition gehalten wird.
+		 *
+		 * @return int Die Anzahl des Artikels, der über diese Artikelposition gehalten wird.
+		 */
+		public function getAnzahl() {
+			return $this->mAnzahl;
+		}
 	}
 ?>
