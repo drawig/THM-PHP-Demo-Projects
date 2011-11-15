@@ -61,5 +61,14 @@
 		public function getID() {
 			return $this->mArtikel->getArtNr();
 		}
+
+		/**
+		 * Addiert auf die aktuelle Anzahl in dieser Artikelposition den übergebenen Summanden.
+		 *
+		 * @param int Der Summand, der auf die aktuelle Anzahl in dieser ArtikelPosition addiert werden soll.
+		 */
+		public function addAnzahl($summand) {
+			$this->mAnzahl += $summand;
+		}
 	}
 ?>
