@@ -32,7 +32,7 @@
 		/**
 		 * Etfernt aus dem Warenkorb die ArtikelPosition mit der gegebenen ArtikelNummer, falls sie vorhanden ist.
 		 *
-		 * @param string Die ArtikelNummer der ArtikelPosition, die aus dem Warenkorb entfernt werden soll.
+		 * @param int Die ArtikelNummer der ArtikelPosition, die aus dem Warenkorb entfernt werden soll.
 		 * @return boolean True, falls die ArtikelPosition im Warenkorb war und entfernt wurde.
 		 */
 		public function removeArtikelPosition($artikelNr) {
@@ -48,7 +48,7 @@
 		 * Ändert die Anzahl der ArtikelPosition mit der gegebenen ArtikelNr, falls sie im Warenkorb ist.
 		 * Setzt die neue Anzahl der ArtikelPosition auf die gegebene Anzahl.
 		 *
-		 * @param string Die ArtikelNr der ArtikelPosition, dessen Anzahl geändert werden soll.
+		 * @param int Die ArtikelNr der ArtikelPosition, dessen Anzahl geändert werden soll.
 		 * @param int Der Wert auf den die Anzahl der ArtikelPosition geändert werden soll.
 		 * @return boolean True, falls die ArtikelPosition im Warenkorb war und die Anzahl erfolgreich geändert wurde.
 		 */
@@ -73,6 +73,16 @@
 				$gesamtPreis += $value->getPreis();
 
 			return $gesamtPreis;
+		}
+
+		/**
+		 * Prüft, ob ein Artikel mit der gegebenen ArtikelNr. im Warenkorb ist.
+		 *
+		 * @param int Die ArtikelNr des Artikels, dessen Präsenz im Warenkorb überprüft werden soll.
+		 * @return boolean True, falls der Artikel mit der angegebenen ArtikelNr. im Warenkorb ist.
+		 */
+		public function contains($artikelNr) {
+			return isset($this->mArtikelPositionen["$artikelNr"]);
 		}
 	}
 ?>
