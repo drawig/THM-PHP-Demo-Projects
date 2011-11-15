@@ -12,6 +12,17 @@
 	} else {
 		$user = unserialize($_SESSION['user']);
 		$userName = $user->getName();
+
+		$warenkorb = $user->getWarenkorb();
+
+		if(isset($_POST['anzahl'])) {
+			$artikelNr = $_POST['artikelid'];
+			$anzahl = $_POST['anzahl'];
+
+			$warenkorb->editArtikelPosition($artikelNr, $anzahl);
+		} else if($_POST['artikeliddel']) {
+			$warenkorb->removeArtikelPosition($_POST['artikeliddel']);
+		}
 	}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
@@ -52,50 +63,36 @@
 		
 		<div id="content">
 			Warenkorb
-			<div class="entry">
-				<div class="pic">
-					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
-				</div>
+
+			<?php
+
+				foreach($warenkorb->getArtikelPositionen() as $value) {
+					$artikel = $value->getArtikel();
+
+					echo '<div class="entry">
+						<div class="pic">
+							<img src="http://' . $artikel->getBildpfad() . '" width="220" height="220">		
+						</div>
 			
-				<div class="description">
-					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-					no sea takimata sanctus est Lorem ipsum dolor sit amet.
-				</div>
-			
-				<div class="options">
-					<b>Artikeloptionen:</b><br><br>
-				<form name="optionform" method="post" action="../php/checkKorb.php">
-					<input name="anzahl" type="text" value="3" size="2" />  
-					<input name="update" type="button" value="Anzahl aendern"/>
-					<input name="del" type="button" value="Entfernen"/>
-				</form>
-				</div>
-			</div>
-			
-			<div class="entry">
-				<div class="pic">
-					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
-				</div>
-			
-				<div class="description">
-					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-					no sea takimata sanctus est Lorem ipsum dolor sit amet.
-				</div>
-			
-				<div class="options">
-					<b>Artikeloptionen:</b><br><br>
-				<form name="optionform" method="post" action="../php/checkKorb.php">
-					<input name="anzahl" type="text" value="1" size="2" />  
-					<input name="update" type="button" value="Anzahl aendern"/>
-					<input name="del" type="button" value="Entfernen"/>
-				</form>
-				</div>
-			</div>
-			
+						<div class="description">'
+							. $artikel->getBeschreibung() .
+						'</div>
+				
+						<div class="options">
+							<b>Artikeloptionen:</b><br><br>
+							<form name="optionform" method="post" action="korb.php">
+								<input name="anzahl" type="text" value="' . $value->getAnzahl() . '" size="2" />  
+								<input name="update" type="submit" value="Anzahl aendern"/>
+								<input name="artikelid" type="hidden" value="' . $value->getID() . '"/>
+							</form> 
+							<form name="deleteform" method="post" action="korb.php">
+								<input name="del" type="submit" value="Entfernen"/>
+								<input name="artikeliddel" type="hidden" value="' . $value->getID() . '"/>
+							</form>
+						</div>
+					</div>';
+				}
+			?>
 						
 			<div id="order">
 				Bestellung abschicken?
