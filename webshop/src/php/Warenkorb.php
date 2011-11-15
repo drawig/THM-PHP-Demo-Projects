@@ -62,6 +62,24 @@
 		}
 
 		/**
+		 * Ruft auf der ArtikelPosition mit der gegebenen ArtikelNr ArtikelPosition::addAnzahl auf.
+		 * Gibt true zurück, falls die ArtikelPosition mit der gegebenen ArtikelNr im Warenkorb ist.
+		 *
+		 * @param int artikelNr Die ArtikelNr der ArtikelPosition, die editiert werden soll.
+		 * @param int Das Argument, womit ArtikelPosition::addAnzahl aufgerufen wird.
+		 * @see ArtikelPosition::addAnzahl
+		 * @return True, falls die ArtikelPosition mit der gegebenen ArtikelNr im Warenkorb ist.
+		 */
+		public function addAnzahl($artikelNr, $summand) {
+			if(isset($this->mArtikelPositionen["$artikelNr"])) {
+				$this->mArtikelPositionen["$artikelNr"]->addAnzahl($summand);
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
 		 * Gibt den Wert(Preis) aller im Warenkorb vorhandenen Artikelpositionen wieder.
 		 *
 		 * @return int Den Wert(Preis) aller im Warenkorb vorhandenen Artikelpositionen.
