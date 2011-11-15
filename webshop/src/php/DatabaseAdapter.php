@@ -38,8 +38,10 @@
 
 				$return = $sth->fetch();
 
-				if(!$return)
+				if(!$return) {
+					$dbh = NULL;
 					return NULL;
+				}
 
 				$returnedUser = new User($userName);
 
@@ -129,6 +131,44 @@
 			return NULL;
 		}
 		
+		/**
+		 * Liest einen einzelnen Artikel mit der gegebenen ArtikelNr. aus der Datenbank.
+		 * Gibt ihn zurück, falls der Datenbankzugriff geglückt ist und er gefunden wurde.
+		 * Gibt sonst NULL zurück.
+		 *
+		 * @param int Die ArtikelNr. des Artikels, der aus der Datenbank gelesen werden soll.
+		 * @return Artikel Den Artikel mit der gegebenen ArtikelNr., falls er gefunden wurde, NULL sonst.
+		 */
+		public static function getSingleArtikel($artikelNr) {
+			$result = NULL;
+
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=webshop", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
 		
+				$sth = $dbh->prepare("SELECT * FROM artikel WHERE id=?;");
+
+				$sth->bindParam(1, $artikelNr);
+
+				$sth->execute();
+
+				$return = $sth->fetch();
+
+				if(!$return) {
+					$dbh = NULL;
+					return NULL;
+				}
+
+				$artNr = $return['id'];
+				$titel = $return['name'];
+				$beschreibung = $return['beschreibung'];
+				$preis = $return['preis'];
+				$bildpfad = $return['bildpfad'];
+
+				$result = new Artikel($artNr, $titel, $beschreibung, $preis, $bildpfad);
+			} catch (Exception $e) {}
+
+			return $result;
+		}
 	}
 ?>
