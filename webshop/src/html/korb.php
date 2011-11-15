@@ -20,7 +20,7 @@
 			$anzahl = $_POST['anzahl'];
 
 			$warenkorb->editArtikelPosition($artikelNr, $anzahl);
-		} else if($_POST['artikeliddel']) {
+		} else if(isset($_POST['artikeliddel'])) {
 			$warenkorb->removeArtikelPosition($_POST['artikeliddel']);
 		}
 	}
