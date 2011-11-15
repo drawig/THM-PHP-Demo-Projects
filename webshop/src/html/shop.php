@@ -34,11 +34,13 @@
 				$warenkorb = $user->getWarenkorb();
 
 				if($warenkorb->contains($artikel->getArtNr())) {
-					$warenkorb->addAnzahl($artikel->getArtNr, $_POST['anzahl']);
+					$warenkorb->addAnzahl($artikel->getArtNr(), $_POST['anzahl']);
 				} else {
 					$artikelPosition = new ArtikelPosition($artikel, $_POST['anzahl']);
 					$warenkorb->addArtikelPosition($artikelPosition);
 				}
+
+				$_SESSION['user'] = serialize($user);
 			}
 		}
 	} 
