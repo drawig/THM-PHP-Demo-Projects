@@ -1,7 +1,6 @@
 <?php
 
 	include('User.php');
-	include('Artikel.php');
 
 	/**
 	 * Diese Klasse bietet Funktionen, mit denen vom Webshop häufig durchgeführte Datenbank-Zugriffe
