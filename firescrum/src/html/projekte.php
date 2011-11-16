@@ -16,9 +16,13 @@
 				foreach($projekte as $value) {
 					$titel = $value->getTitel();
 					$beschreibung = $value->getBeschreibung();
+					$id = $value->getId();
 
 					echo "<h3>$titel</h3>
-						$beschreibung<br/>";
+						$beschreibung<br/>" .
+						'<input type="submit" value="Zeige Tickets"/><br/>
+						<input type="submit" value="Ticket hinzufügen"/><br/>
+						<input name="projekt" type="hidden" value="' . $id . '"/>';
 				}
 			}
 		?>
