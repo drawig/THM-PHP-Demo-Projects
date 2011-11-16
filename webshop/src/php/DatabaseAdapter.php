@@ -169,5 +169,81 @@
 
 			return $result;
 		}
+		
+		
+		/**
+		* Loescht den Artikel zu dem die uebergebene ArtikelNr gehoert aus der Datenbank und liefert TRUE wenn erfolgreich
+		*/
+		public static function deleteArtikel($artikelNr) {
+			$result = NULL;
+
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=webshop", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+		
+				$sth = $dbh->prepare("DELETE FROM artikel WHERE id=?;");
+
+				$sth->bindParam(1, $artikelNr);
+
+				$sth->execute();
+
+				$return = $sth->fetch();
+
+				if($return) {
+					$dbh = NULL;
+					return NULL;
+				}
+
+
+				$result = TRUE;
+			} catch (Exception $e) {}
+
+			return $result;
+		}
+		
+		/**
+		* Bearbeitet Daten............. bla
+		*/
+		public static function updateArtikel($artikel, $id) {
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=webshop", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+		
+		
+				if (strcmp($artikel->getBildpfad(), "res/") == 0) {
+				
+					$sth = $dbh->prepare("UPDATE artikel SET name=?, beschreibung=?, preis=? WHERE id=?;");
+
+					$sth->bindParam(1, $artikel->getTitel());
+					$sth->bindParam(2, $artikel->getBeschreibung());
+					$sth->bindParam(3, $artikel->getPreis());
+					$sth->bindParam(4, $id);
+					$sth->execute();
+					
+				} else {
+				
+					$sth = $dbh->prepare("UPDATE artikel SET name=?, beschreibung=?, preis=?, bildpfad=? WHERE id=?;");
+
+					$sth->bindParam(1, $artikel->getTitel());
+					$sth->bindParam(2, $artikel->getBeschreibung());
+					$sth->bindParam(3, $artikel->getPreis());
+					$sth->bindParam(4, $artikel->getBildpfad());
+					$sth->bindParam(5, $id);
+					$sth->execute();
+					
+				}
+
+				$return = $sth->fetch();
+
+				if(!$return)
+					return NULL;
+
+				$dbh = NULL;
+
+			} catch (Exception $e) {}
+
+			return NULL;
+		}
+		
 	}
 ?>
