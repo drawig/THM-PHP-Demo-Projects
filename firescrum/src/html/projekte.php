@@ -6,6 +6,7 @@
 		<title>Firescrum - Projekte</title>
 	</head>
 	<body>
+		<h1>Angelegte Projekte</h1>
 		<?php
 			include('../php/DatabaseAdapter.php');
 
