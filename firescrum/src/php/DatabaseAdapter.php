@@ -16,8 +16,8 @@
 		* Erstellt aus dem uebergebenen Titel und der Beschreibung ein neues Projekt bzw. erstellt einen Eintrag
 		* in der Datenbank mit diesen Daten.
 		*
-		* @param titel  Titel des Projekts
-		* @param beschreibung Beschreibung des Projekts
+		* @param String  Titel des Projekts
+		* @param String Beschreibung des Projekts
 		*/
 		public static function addProjekt($titel, $beschreibung) {
 			try {
@@ -96,6 +96,43 @@
 			return NULL;
 		}
 		
+		/**
+		* Liest ein einzelnes Projekt anhand der ubergebenen id aus der Datenbank aus und gibt dieses zurueck
+		* 
+		* @param int eindeutige id des Projekts
+		* @return Projekt das zur ID zugehoerige Projekt
+		*/
+		public static function getSingleProjekt($id) {
+			$result = NULL;
+
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+		
+				$sth = $dbh->prepare("SELECT * FROM projekt WHERE id=?;");
+
+				$sth->bindParam(1, $id);
+
+				$sth->execute();
+
+				$return = $sth->fetch();
+
+				if(!$return) {
+					$dbh = NULL;
+					return NULL;
+				}
+
+				$id = $return['id'];
+				$titel = $return['titel'];
+				$beschreibung = $return['beschreibung'];
+				
+
+				$result = new Projekt($id, $titel, $beschreibung);
+				
+			} catch (Exception $e) {}
+
+			return $result;
+		}
 		
 	}
 ?>

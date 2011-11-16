@@ -25,6 +25,19 @@
 			);";
 
 			mysql_query($querystring, $mySqlConnection);
+			
+			$querystring = "CREATE TABLE ticket (
+				id int AUTO_INCREMENT,
+				pid int references projekte(id)
+				titel varchar(50) NOT NULL,
+				beschreibung text,
+				stunden int,
+				vorgaenger int references ticket(id),
+				nachfolger int references ticket(id),
+				PRIMARY KEY(id)
+			);";
+			
+			mysql_query($querystring, $mySqlConnection);
 		} else {
 			echo "Konnte Datenbank-Schema mit Namen $dbschema nicht auswählen: " . mysql_error() . "<br/>";
 		}
