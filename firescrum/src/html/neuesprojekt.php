@@ -11,7 +11,8 @@
 			<h3>Titel:</h3>
 			<input type="text" name="titel"/><br>
 			<h3>Beschreibung:</h3>
-			<textarea name="beschreibung" cols="100" rows="50"/>
+			<textarea name="beschreibung" cols="100" rows="25"></textarea><br/>
+			<input type="submit" name="neuesprojekt" value="Neues Projekt anlegen"/>
 		</form>
 	</body>
 </html>
