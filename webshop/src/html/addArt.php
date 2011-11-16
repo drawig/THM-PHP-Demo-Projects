@@ -17,7 +17,34 @@
 		$titel =  $_POST['titel'];
 		$beschreibung = $_POST['beschreibung'];
 		$preis = $_POST['preis'];
-		$bildpfad = "empty";
+		$bildpfad = "res/".$_FILES['bildpfad']['name'];
+		
+
+	//	echo "<pre>" .print_r( $_POST, true ). "</pre>";
+	//	echo "<pre>" .print_r( $_FILES, true ). "</pre>";
+		
+		
+		$dateityp = GetImageSize($_FILES['bildpfad']['tmp_name']);
+		if($dateityp[2] != 0)
+		{
+
+		if($_FILES['bildpfad']['size'] <  1024000)
+			{
+			move_uploaded_file($_FILES['bildpfad']['tmp_name'], "../../res/".$_FILES['bildpfad']['name']);
+			}
+
+		else
+			{
+				echo "Das Bild darf nicht größer als 1 MB sein ";
+			}
+
+			}
+
+		else
+			{
+			echo "Bitte nur Bilder im Gif bzw. jpg Format hochladen";
+			}	
+		
 		
 		$artikel = new Artikel(-1, $titel, $beschreibung, $preis, $bildpfad);
 		
@@ -79,7 +106,7 @@
 			
 			?>
 			<br>
-				<form name="insertform" method="post" action="addArt.php">
+				<form name="insertform" method="post" action="addArt.php" enctype="multipart/form-data">
 				<b>
 				<table border="0">
 					<tr>
@@ -96,7 +123,7 @@
 					</tr>
 					<tr>
 						<td>Bild:</td>
-						<td><input name="bildpfad" type="text" value="" size="2" /></td>
+						<td><input name="bildpfad" type="file"  size="10" /></td>
 					</tr>
 					<tr>
 						<td></td>
