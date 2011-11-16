@@ -20,9 +20,15 @@
 
 					echo "<h3>$titel</h3>
 						$beschreibung<br/>" .
-						'<input type="submit" name="showtickets" value="Zeige Tickets"/><br/>
-						<input type="submit" name="addticket" value="Ticket hinzufügen"/><br/>
-						<input name="projekt" type="hidden" value="' . $id . '"/>';
+						'<form method="post">
+							<form method="post" action="showtickets.php">
+								<input type="submit" name="showtickets" value="Zeige Tickets"/><br/>
+							</form>
+							<form method="post" action="addticket.php">
+								<input type="submit" name="addticket" value="Ticket hinzufügen"/><br/>
+							</form>
+							<input name="projekt" type="hidden" value="' . $id . '"/>
+						</form>';
 				}
 			}
 		?>
