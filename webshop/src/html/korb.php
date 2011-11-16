@@ -80,7 +80,7 @@
 
 					echo '<div class="entry">
 						<div class="pic">
-							<img src="http://' . $artikel->getBildpfad() . '" width="220" height="220">		
+							<img src="../../' . $artikel->getBildpfad() . '" width="220" height="220">		
 						</div>
 			
 						<div class="description">'
