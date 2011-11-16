@@ -12,8 +12,30 @@
 		$userName = $user->getName();
 	}
 	
-	//TODO Bildpfad einbauen
-	if(isset($_POST['titel']) && isset($_POST['beschreibung']) && isset($_POST['preis']) ) {
+	
+	if (isset($_POST['update'])) {
+		$artikel = DatabaseAdapter::getSingleArtikel($_POST['artikelid']);
+		
+		
+			
+	}	
+	
+	//wenn update
+	if (isset($_POST['titel']) && isset($_POST['beschreibung']) && isset($_POST['preis']) && isset($_POST['sub2']) && isset($_POST['id'])) {
+		$id = $_POST['id'];
+		$titel =  $_POST['titel'];
+		$beschreibung = $_POST['beschreibung'];
+		$preis = $_POST['preis'];
+		$bildpfad = "res/".$_FILES['bildpfad']['name'];
+		
+		$artikelN = new Artikel(-1, $titel, $beschreibung, $preis, $bildpfad);
+		
+		$return = DatabaseAdapter::updateArtikel($artikelN, $id);
+		
+	}
+	
+	
+	if(isset($_POST['titel']) && isset($_POST['beschreibung']) && isset($_POST['preis']) && !isset($_POST['sub2']) ) {
 		$titel =  $_POST['titel'];
 		$beschreibung = $_POST['beschreibung'];
 		$preis = $_POST['preis'];
@@ -96,15 +118,28 @@
 		</div>
 		
 		<div id="content">
-			Neuen Artikel eintragen
+		<?php if (isset($_POST['update'])) {
+					echo "Artikel aktualisieren";
+				} else {
+					echo "Neuen Artikel eintragen";
+				}
+				
+		?>
 			<div class="entry">
 			
 			<?php
 				if (isset($_POST['sub'])) {
 					echo "<b>Artikel >  $titel  < erfolgreich eingetragen!</b> Fuer weiteren Artikel bitte Formular erneut ausfuellen!<br>";
 				}
+				if (isset($_POST['sub2'])) {
+					echo "<b>Artikel >  $titel  < erfolgreich aktualisiert!</b> Fuer neuen Artikel bitte Formular ausfuellen!<br>";
+				}
 			
 			?>
+			<?php
+				if (!isset($_POST['update'])) {
+					
+					echo '				
 			<br>
 				<form name="insertform" method="post" action="addArt.php" enctype="multipart/form-data">
 				<b>
@@ -131,9 +166,41 @@
 					</tr>
 				</table>
 				
-				</form>
-
+				</form>';
+				} else {
+					$artikel = DatabaseAdapter::getSingleArtikel($_POST['artikelid']);
+									echo '				
+			<br>
+				<form name="insertform2" method="post" action="addArt.php" enctype="multipart/form-data">
+				<b>
+				<table border="0">
+					<tr>
+						<td>Titel:</td>
+						<td><input name="titel" type="text" value="' . $artikel->getTitel() . ' " size="40" /></td>
+					</tr>
+					<tr>
+						<td>Beschreibung:</td>
+						<td><textarea name="beschreibung" rows="5" cols="29" type="text">' . $artikel->getBeschreibung() . '</textarea></td>
+					</tr>
+					<tr>
+						<td>Preis:</td>
+						<td><input name="preis" type="text" value="' . $artikel->getPreis() . '" size="4" /></td>
+					</tr>
+					<tr>
+						<td>Bild:</td>
+						<td><input name="bildpfad" type="file" size="10" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input name="sub2" type="submit" value="Artikel eintragen"/></td>
+						<input name="id" type="hidden" value="' . $artikel->getArtNr() . '"/>
+					</tr>
+				</table>
 				
+				</form>';
+				}
+				
+				?>
 			
 			
 			
