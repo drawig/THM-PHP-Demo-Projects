@@ -1,8 +1,8 @@
 <?php
 	//Hier die DB Daten eingeben
-	$dbhost = "";
-	$dbusername = "";
-	$dbpassword = "";
+	$dbhost = "localhost";
+	$dbusername = "root";
+	$dbpassword = "frena8ataspapha";
 
 	//Hier den Namen und PW des Users eingeben, den man einfügen möchte, um in den Webshop einloggen zu können.
 	$username = "";
@@ -22,21 +22,30 @@
 				titel varchar(50) NOT NULL,
 				beschreibung text,
 				PRIMARY KEY(id)
-			);";
+			) ENGINE=InnoDB;";
 
 			mysql_query($querystring, $mySqlConnection);
-			
-			$querystring = "CREATE TABLE ticket (
+
+			$querystring = "CREATE TABLE tickets (
 				id int AUTO_INCREMENT,
-				pid int references projekte(id)
+				pid int NOT NULL,
 				titel varchar(50) NOT NULL,
 				beschreibung text,
-				stunden int,
-				vorgaenger int references ticket(id),
-				nachfolger int references ticket(id),
-				PRIMARY KEY(id)
-			);";
+				stunden int NOT NULL,
+				PRIMARY KEY(id),
+				FOREIGN KEY(pid) REFERENCES projekte(id)
+			) ENGINE=InnoDB;";
 			
+			mysql_query($querystring, $mySqlConnection);
+
+			$querystring = "CREATE TABLE graphknoten (
+				vorgaenger int NOT NULL,
+				nachfolger int NOT NULL,
+				FOREIGN KEY(vorgaenger) REFERENCES tickets(id),
+				FOREIGN KEY(nachfolger) REFERENCES tickets(id),
+				PRIMARY KEY (vorgaenger, nachfolger)
+			) ENGINE=InnoDB;";
+
 			mysql_query($querystring, $mySqlConnection);
 		} else {
 			echo "Konnte Datenbank-Schema mit Namen $dbschema nicht auswählen: " . mysql_error() . "<br/>";
