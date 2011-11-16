@@ -20,8 +20,8 @@
 
 					echo "<h3>$titel</h3>
 						$beschreibung<br/>" .
-						'<input type="submit" value="Zeige Tickets"/><br/>
-						<input type="submit" value="Ticket hinzufügen"/><br/>
+						'<input type="submit" name="showtickets" value="Zeige Tickets"/><br/>
+						<input type="submit" name="addticket" value="Ticket hinzufügen"/><br/>
 						<input name="projekt" type="hidden" value="' . $id . '"/>';
 				}
 			}
