@@ -13,7 +13,11 @@
 		private static $mDBPassword = "";
 
 		/**
+		* Erstellt aus dem uebergebenen Titel und der Beschreibung ein neues Projekt bzw. erstellt einen Eintrag
+		* in der Datenbank mit diesen Daten.
 		*
+		* @param titel  Titel des Projekts
+		* @param beschreibung Beschreibung des Projekts
 		*/
 		public static function addProjekt($titel, $beschreibung) {
 			try {
@@ -42,7 +46,10 @@
 		
 		
 		/**
+		* Liest saemtliche in der Datenbank vorhanden Projekteintraege aus, speichert diese in einem
+		* array und liefert dieses zurueck
 		*
+		* @return array mit allen Projekten
 		*/
 		public static function getProjekte() {
 			
