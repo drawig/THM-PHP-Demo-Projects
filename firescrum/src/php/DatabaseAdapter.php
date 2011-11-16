@@ -9,8 +9,8 @@
 	class DatabaseAdapter {
 
 		//Hier richtige Daten eingeben.
-		private static $mDBHost = "";
-		private static $mDBUser = "";
+		private static $mDBHost = "localhost";
+		private static $mDBUser = "root";
 		private static $mDBPassword = "";
 
 		/**
@@ -133,6 +133,58 @@
 			} catch (Exception $e) {}
 
 			return $result;
+		}
+		
+		
+		/**
+		* Liefert alle zum uebergebenen Projekt alle in der Datenbank vorhanden Tickets als array
+		*
+		* @param projekt projekt zu dem die Tickets geliefert werden sollen
+		* @return array enthaelt alle Tickets zum Projekt
+		*/
+		public static function getTickets($projekt) {
+			
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+
+		//TODO	$sth = $dbh->prepare("SELECT * FROM projekte;");
+
+				$sth->execute();
+
+				//Liefert ein Array welches wiederrum weitere Arrays beeinhaltet, welche die key + value paare beeinhalten
+				$return = $sth->fetchAll();
+
+				if(!$return)
+					return NULL;
+
+				
+				//Durchlaeuft das aeußere Array (welches Arrays enthaelt)
+				foreach ($return as $entry) {
+					$tempArray = array();
+					
+					//Durchlaeuft das innere Array (welches key-value-paare enthaelt)
+					foreach($entry as $key => $value) {
+						$tempArray[$key] = $value;
+					}
+					
+					//Neue Tickets erstellen und dem returnArray hinzufuegen
+			//TODO	$ticket = new Ticket($tempArray['id'], $tempArray['titel'], $tempArray['beschreibung']);
+					$returnArray[] = $ticket;
+					
+				}
+				
+				/* Debug
+				echo '<br><br>';
+				print_r($returnArray); */
+				
+				$dbh = NULL;
+				
+				return $returnArray;
+				
+			} catch (Exception $e) {}
+
+			return NULL;
 		}
 		
 	}
