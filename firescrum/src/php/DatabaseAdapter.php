@@ -1,5 +1,6 @@
 <?php
 
+	include('Projekt.php');
 
 	/**
 	 * Diese Klasse bietet Funktionen, mit denen von Firescrum häufig durchgeführte Datenbank-Zugriffe
@@ -78,7 +79,7 @@
 					}
 					
 					//Neue Projekte erstellen und dem returnArray hinzufuegen
-					$projekt = new Projekt($tempArray['titel'],$tempArray['beschreibung']);
+					$projekt = new Projekt($tempArray['id'], $tempArray['titel'], $tempArray['beschreibung']);
 					$returnArray[] = $projekt;
 					
 				}
