@@ -11,12 +11,14 @@
 
 			$projekte = DatabaseAdapter::getProjekte();
 
-			foreach($projekte as $value) {
-				$titel = $value->getTitel();
-				$beschreibung = $value->getBeschreibung();
+			if($projekte != NULL) {
+				foreach($projekte as $value) {
+					$titel = $value->getTitel();
+					$beschreibung = $value->getBeschreibung();
 
-				echo "<h3>$titel</h3>
-					$beschreibung<br/>";
+					echo "<h3>$titel</h3>
+						$beschreibung<br/>";
+				}
 			}
 		?>
 	</body>
