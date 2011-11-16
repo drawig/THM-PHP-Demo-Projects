@@ -5,6 +5,30 @@
 	<head>
 		<title>Firescrum - Ticket hinzufügen</title>
 	</head>
+	
+	<?php
+		include('../php/DatabaseAdapter.php');
+		
+		if (isset($_POST['addticket']) && isset($_POST['projekt'])) {
+			$id = $_POST['projekt'];	
+			$projekt = DatabaseAdapter::getProjekt($id);
+			
+			if (isset($_POST['titel']) && isset($_POST['beschreibung']) && isset($_POST['stunden']) && isset($_POST['vorgaenger'])) {
+				$titel = $_POST['titel'];
+				$beschreibung = $_POST['beschreibung'];
+				$stunden = $_POST['stunden'];
+			
+				//String an addTicket
+				$vorgaenger = $_POST['vorgaenger'];
+			
+				$ticket = new Ticket(-1, $titel, $beschreibung, $stunden, -1, -1); //erste -1 aendern
+			
+				$result = DatabaseAdapter::addTicket($projekt, $ticket, $vorgaenger);
+			}
+		}
+	
+	?>
+	
 	<body>
 		<h1>Ticket hinzuf&uuml;gen</h1>
 		<form method="post" action="addticket.php">

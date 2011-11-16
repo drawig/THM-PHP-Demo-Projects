@@ -47,6 +47,74 @@
 		
 		
 		/**
+		* Fuegt dem uebergebenen Projekt das uebergebene Ticket hinzu und speichert dieses in der Datenbank.
+		*
+		* @param Projekt das Projekt, zu dem ein Ticket hinzugefuegt werden soll
+		* @param Ticket das Ticket, welches zum Projekt hinzugefuegt werden soll
+		* @param String Die Vorgaenger mit Kommata getrennt
+		*/
+		public static function addTicket($projekt, $ticket, $vorgaenger) {
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+		
+				
+				
+
+				$projektId = $projekt->getId();
+				
+				$ticketId = $ticket->getID();
+				$ticketTitel = $ticket->getTitel();
+				$ticketBechreibung = $ticket->getBeschreibung();
+				$ticketStunden = $ticket->getStunden();
+				
+				$ticketVorgaenger = array();
+				$ticketVorgaenger = ticket->getVorgaenger();
+				
+				$ticketNachfolger = array();
+				$ticketNachfolger = ticket->getNachfolger();
+				
+				//String auslesen und zahlen im array speichern  TODO
+				$zahlen = array();
+				bla..
+				
+				$vorgaengerTicketsDenenDerNachfolgerGesetztWerdenMuss = array();
+				//Zahlen Array auslesen und die Vorgaenger zu diesen Zahlen liefern
+				foreach ($zahlen as $entry) {
+					$vorgaengerTicketsDenenDerNachfolgerGesetztWerdenMuss[] = DatabaseAdapter::getTicket($entry); //TODO getTicket
+				}
+					
+				//Bei den Vorgaengern den Nachfolger (das uebergene Ticket) eintragen (in DB!)
+				foreach ($vorgaengerTicketsDenenDerNachfolgerGesetztWerdenMuss as $entry) {
+					$entry->addNachfolger($ticket); //hier steht das falsche ticket new Ticket(-1, $titel, $beschreibung, $stunden, -1, -1); 
+				}
+				
+		
+		
+		
+	//TODO		$sth = $dbh->prepare("INSERT INTO projekte(titel, beschreibung) VALUES(?, ?);");
+
+	//TODO		$sth->bindParam(1, $titel);
+	//TODO		$sth->bindParam(2, $beschreibung);
+				
+							
+				$sth->execute();
+
+				$return = $sth->fetch();
+
+				if(!$return)
+					return NULL;
+
+				$dbh = NULL;
+
+			} catch (Exception $e) {}
+
+			return NULL;
+		}
+
+		
+		
+		/**
 		* Liest saemtliche in der Datenbank vorhanden Projekteintraege aus, speichert diese in einem
 		* array und liefert dieses zurueck
 		*
@@ -185,6 +253,13 @@
 			} catch (Exception $e) {}
 
 			return NULL;
+		}
+		
+		/**
+		* TODO
+		*/
+		public static function getTicket($ticket) {
+		
 		}
 		
 	}
