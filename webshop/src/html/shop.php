@@ -43,6 +43,14 @@
 				$_SESSION['user'] = serialize($user);
 			}
 		}
+		
+		if (isset($_POST['delete'])) {
+			if (DatabaseAdapter::deleteArtikel($_POST['artikelid']) == TRUE) {
+				$artikelnr = $_POST['artikelid'];
+				echo "Artikel mit der Artikelnr $artikelnr wurde entfernt!";
+			}
+		}
+		
 	} 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
@@ -64,8 +72,7 @@
 					if($loggedIn) {
 						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>
 							<li><a href="korb.php">Warenkorb</a></li>
-							<li><a href="addArt.php">Neuer Artikel</a></li>
-							<li><a href="shop.php">Test</a></li>';
+							<li><a href="addArt.php">Neuer Artikel</a></li>';
 					} else {
 						$html = '<li><a href="shop.php">Artikeluebersicht</a></li>';
 					}
@@ -151,7 +158,17 @@
 											<input name="add" type="submit" value="Zum Warenkorb hinzufuegen"/>
 											<input name="artikelid" type="hidden" value="' . "$artikelId" . '"/>
 										</form>
+										<br>
+										<form name="updateform" method="post" action="addArt.php">
+											<input name="update" type="submit" value="Artikel bearbeiten"/>
+											<input name="artikelid" type="hidden" value="' . "$artikelId" . '"/>
+										</form>
+										<form name="delform" method="post" action="shop.php">
+											<input name="delete" type="submit" value="Artikel löschen"/>
+											<input name="artikelid" type="hidden" value="' . "$artikelId" . '"/>
+										</form>
 										</div>';
+										
 							}
 						
 					echo '	
@@ -164,60 +181,7 @@
 			
 			?>
 			
-			
-			
-			
-			<div class="entry">
-				<div class="pic">	
-					<img src="http://images-5.findicons.com/files/icons/252/apples/512/imac_mac_archigraphs.png" width="220" height="220">
-				</div>
-			
-				<div class="description">
-					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-					no sea takimata sanctus est Lorem ipsum dolor sit amet.
-				</div>
-		
-				<?php	
-					if($loggedIn) {
-						echo 	'<div class="options">
-								<b>Artikeloptionen:</b><br><br>
-								<form name="addform" method="post" action="../php/checkAdd.php">
-									<input name="anzahl" type="text" size="2" />  
-									<input name="add" type="submit" value="Zum Warenkorb hinzufuegen"/>
-								</form>
-					
-							</div>';
-					}
-				?>
-			</div>
-			
-			<div class="entry">
-				<div class="pic">
-					<img src="http://mtvnrewards.com/images/product_images/alienware.gif" width="220" height="220">		
-				</div>
-			
-				<div class="description">
-					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-					tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-					At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-					no sea takimata sanctus est Lorem ipsum dolor sit amet.
-				</div>
-			
-				<?php	
-					if($loggedIn) {
-						echo 	'<div class="options">
-								<b>Artikeloptionen:</b><br><br>
-								<form name="addform2" method="post" action="../php/checkAdd.php">
-									<input name="anzahl" type="text" size="2" />  
-									<input name="add" type="button" value="Zum Warenkorb hinzufuegen"/>
-								</form>
-					
-							</div>';
-					}
-				?>
-			</div>
+
 
 			
 		</div>

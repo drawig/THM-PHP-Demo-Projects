@@ -99,7 +99,6 @@
 			<li><a href="shop.php">Artikeluebersicht</a></li>
 			<li><a href="korb.php">Warenkorb</a></li>
 			<li><a href="addArt.php">Neuer Artikel</a></li>
-			<li><a href="shop.php">Test#2</a></li>
 			</div>
 			</ul>
 			<div id="login">

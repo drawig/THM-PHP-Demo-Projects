@@ -1,12 +1,12 @@
 <?php
 	//Hier die DB Daten eingeben
-	$dbhost = "";
-	$dbusername = "";
+	$dbhost = "localhost";
+	$dbusername = "root";
 	$dbpassword = "";
 
 	//Hier den Namen und PW des Users eingeben, den man einfügen möchte, um in den Webshop einloggen zu können.
-	$username = "";
-	$password = "";
+	$username = "test";
+	$password = "test";
 
 	//Ab hier bitte nichts ändern.
 	$dbschema = "webshop";

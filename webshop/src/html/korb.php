@@ -1,10 +1,6 @@
 <?php
 	session_start(); 
-	echo '<?xml version="1.0" encoding="UTF-8"?>'; 
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<?php
 	include('../php/User.php');
 
 	if(!isset($_SESSION['user'])) {
@@ -33,7 +29,9 @@
 
 		$_SESSION['user'] = serialize($user);
 	}
+		echo '<?xml version="1.0" encoding="UTF-8"?>'; 
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
@@ -52,7 +50,6 @@
 			<li><a href="shop.php">Artikeluebersicht</a></li>
 			<li><a href="korb.php">Warenkorb</a></li>
 			<li><a href="addArt.php">Neuer Artikel</a></li>
-			<li><a href="shop.php">Test#2</a></li>
 			</div>
 			</ul>
 			<div id="login">
@@ -83,9 +80,14 @@
 							<img src="../../' . $artikel->getBildpfad() . '" width="220" height="220">		
 						</div>
 			
-						<div class="description">'
-							. $artikel->getBeschreibung() .
-						'</div>
+						<div class="description"><b>
+						' . $artikel->getTitel() .
+						'</b><br><br>' . $artikel->getBeschreibung() . '
+						<br><br>
+						' . $artikel->getPreis() .
+						' &euro;
+						
+						</div>
 				
 						<div class="options">
 							<b>Artikeloptionen:</b><br><br>
@@ -103,6 +105,8 @@
 						</div>
 					</div>';
 				}
+				$preis = $warenkorb->getGesamtPreis();
+				echo "<h2>Gesamtpreis: $preis  &euro;</h2>";
 			?>
 						
 			<div id="order">

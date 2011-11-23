@@ -9,8 +9,8 @@
 	class DatabaseAdapter {
 
 		//Hier richtige Daten eingeben.
-		private static $mDBHost = "";
-		private static $mDBUser = "";
+		private static $mDBHost = "localhost";
+		private static $mDBUser = "root";
 		private static $mDBPassword = "";
 
 		/**
