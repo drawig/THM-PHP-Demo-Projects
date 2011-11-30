@@ -9,8 +9,8 @@
 	class DatabaseAdapter {
 
 		//Hier richtige Daten eingeben.
-		private static $mDBHost = "localhost";
-		private static $mDBUser = "root";
+		private static $mDBHost = "";
+		private static $mDBUser = "";
 		private static $mDBPassword = "";
 
 		/**
@@ -57,56 +57,77 @@
 			try {
 				$dbHost = DatabaseAdapter::$mDBHost;
 				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
-		
-				
-				
-
+					
 				$projektId = $projekt->getId();
 				
-				$ticketId = $ticket->getID();
+		//		$ticketId = $ticket->getID(); //hier noch -1
 				$ticketTitel = $ticket->getTitel();
 				$ticketBechreibung = $ticket->getBeschreibung();
 				$ticketStunden = $ticket->getStunden();
 				
-				$ticketVorgaenger = array();
-				$ticketVorgaenger = ticket->getVorgaenger();
-				
+				$ticketVorgaenger = array();			
 				$ticketNachfolger = array();
-				$ticketNachfolger = ticket->getNachfolger();
 				
-				//String auslesen und zahlen im array speichern  TODO
-				$zahlen = array();
-				bla..
 				
-				$vorgaengerTicketsDenenDerNachfolgerGesetztWerdenMuss = array();
-				//Zahlen Array auslesen und die Vorgaenger zu diesen Zahlen liefern
-				foreach ($zahlen as $entry) {
-					$vorgaengerTicketsDenenDerNachfolgerGesetztWerdenMuss[] = DatabaseAdapter::getTicket($entry); //TODO getTicket
+				//erstmal neues Ticket in DB eintragen und direkt wieder auslesen um die ID zu bekommen
+				$sth = $dbh->prepare("INSERT INTO tickets(pid, titel, beschreibung, stunden) VALUES(?, ?, ?, ?);");
+				
+				$sth->bindParam(1, $projektId);
+				$sth->bindParam(2, $ticketTitel);
+				$sth->bindParam(3, $ticketBeschreibung);
+				$sth->bindParam(4, $ticketStunden);
+				
+				$sth->execute();
+				
+				$sth = $dbh->prepare("SELECT * FROM tickets ORDER BY id DESC;"); 
+				$sth->execute();
+				
+				$returnTicket = $sth->fetchAll();
+				$i = 0;
+				
+				$ticketID = 0;
+				
+				//Durchlaeuft das aeußere Array (welches Arrays enthaelt)
+				foreach ($returnTicket as $entry) {
+					$tempArray = array();
+					
+					//Durchlaeuft das innere Array (welches key-value-paare enthaelt)
+					foreach($entry as $key => $value) {
+						
+						if($i == 0) {
+							$tempArray[$key] = $value;
+						}
+						$i = 1;
+					}
+					//Aktuelle ID vom neuen Ticket
+					$ticketID = $tempArray['id'];
+					
 				}
 					
-				//Bei den Vorgaengern den Nachfolger (das uebergene Ticket) eintragen (in DB!)
-				foreach ($vorgaengerTicketsDenenDerNachfolgerGesetztWerdenMuss as $entry) {
-					$entry->addNachfolger($ticket); //hier steht das falsche ticket new Ticket(-1, $titel, $beschreibung, $stunden, -1, -1); 
+				
+
+				if(!$returnTicket) {
+					$dbh = NULL;
+					return NULL;
+				}
+
+				if (count($vorgaenger) == 0) {
+				//String auslesen und zahlen im array speichern 	
+				$zahlen = split('[,]', $vorgaenger);
+
+				foreach ($zahlen as $id) {
+					$sth = $dbh->prepare("INSERT INTO graphknoten(vorgaenger, nachfolger) VALUES(?, ?);");
+				
+					$sth->bindParam(1, $id);
+					$sth->bindParam(2, $ticketID);
+			
+					$sth->execute();
 				}
 				
-		
-		
-		
-	//TODO		$sth = $dbh->prepare("INSERT INTO projekte(titel, beschreibung) VALUES(?, ?);");
-
-	//TODO		$sth->bindParam(1, $titel);
-	//TODO		$sth->bindParam(2, $beschreibung);
+				}
 				
-							
-				$sth->execute();
-
-				$return = $sth->fetch();
-
-				if(!$return)
-					return NULL;
-
 				$dbh = NULL;
-
+				
 			} catch (Exception $e) {}
 
 			return NULL;
@@ -178,7 +199,7 @@
 				$dbHost = DatabaseAdapter::$mDBHost;
 				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
 		
-				$sth = $dbh->prepare("SELECT * FROM projekt WHERE id=?;");
+				$sth = $dbh->prepare("SELECT * FROM projekte WHERE id=?;");
 
 				$sth->bindParam(1, $id);
 
@@ -207,26 +228,29 @@
 		/**
 		* Liefert alle zum uebergebenen Projekt alle in der Datenbank vorhanden Tickets als array
 		*
-		* @param projekt projekt zu dem die Tickets geliefert werden sollen
+		* @param string Projekt ID des Projekts zu dem die Tickets geliefert werden sollen
 		* @return array enthaelt alle Tickets zum Projekt
 		*/
-		public static function getTickets($projekt) {
+		public static function getTickets($projektId) {
 			
 			try {
 				$dbHost = DatabaseAdapter::$mDBHost;
 				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+				$tickets = array();
 
-		//TODO	$sth = $dbh->prepare("SELECT * FROM projekte;");
+				$sth = $dbh->prepare("SELECT * FROM tickets WHERE pid=?;");
+				$sth->bindParam(1, $projektId);
 
 				$sth->execute();
 
 				//Liefert ein Array welches wiederrum weitere Arrays beeinhaltet, welche die key + value paare beeinhalten
 				$return = $sth->fetchAll();
 
-				if(!$return)
+				if(!$return) {
+					$dbh = NULL;
 					return NULL;
+				}
 
-				
 				//Durchlaeuft das aeußere Array (welches Arrays enthaelt)
 				foreach ($return as $entry) {
 					$tempArray = array();
@@ -235,10 +259,31 @@
 					foreach($entry as $key => $value) {
 						$tempArray[$key] = $value;
 					}
+
+					$sth = $dbh->prepare("SELECT * FROM graphknoten WHERE nachfolger=?;");
+					$sth->bindParam(1, $tempArray['id']);
 					
-					//Neue Tickets erstellen und dem returnArray hinzufuegen
-			//TODO	$ticket = new Ticket($tempArray['id'], $tempArray['titel'], $tempArray['beschreibung']);
-					$returnArray[] = $ticket;
+					$sth->execute();
+
+					$ergebnis = $sth->fetchAll();
+					$vorgaengerIds = array();
+
+					foreach($ergebnis as $entry)
+						$vorgaengerIds[] = $entry['vorgaenger'];
+
+					$sth = $dbh->prepare("SELECT * FROM graphknoten WHERE vorgaenger=?;");
+					$sth->bindParam(1, $tempArray['id']);
+					
+					$sth->execute();
+
+					$ergebnis = $sth->fetchAll();
+					$nachfolgerIds = array();
+
+					foreach($ergebnis as $entry)
+						$nachfolgerIds[] = $entry['nachfolger'];
+
+					$ticket = new Ticket($tempArray['id'], $tempArray['titel'], $tempArray['beschreibung'], $tempArray['stunden'], $vorgaengerIds, $nachfolgerIds);
+					$tickets[] = $ticket;
 					
 				}
 				
@@ -248,7 +293,7 @@
 				
 				$dbh = NULL;
 				
-				return $returnArray;
+				return $tickets;
 				
 			} catch (Exception $e) {}
 
@@ -256,10 +301,42 @@
 		}
 		
 		/**
-		* TODO
+		* Liefert das Ticket zu der uebergenen ID (Zahl)
+		*
+		* @param int ID (Zahl) des benoetigten Tickets
+		* @return Ticket das Ticket zu der ID
 		*/
-		public static function getTicket($ticket) {
-		
+		public static function getTicket($id) {
+			try {
+				$dbHost = DatabaseAdapter::$mDBHost;
+				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
+
+				$sth = $dbh->prepare("SELECT * FROM tickets WHERE id =?;");
+				
+				$sth->bindParam(1, $id);
+
+				$sth->execute();
+
+				$return = $sth->fetch();
+
+				if(!$return) {
+					$dbh = NULL;
+					return NULL;
+				}
+
+
+				$id = $return['id'];
+				$pid = $return['pid']; //TODO pid?
+				$titel = $return['titel'];
+				$beschreibung = $return['beschreibung'];
+				$stunden = $return['stunden'];
+				
+ 
+				$result = new Ticket($id, $titel, $beschreibung, $stunden); //TODO pid?
+				
+			} catch (Exception $e) {}
+
+			return $result;
 		}
 		
 	}

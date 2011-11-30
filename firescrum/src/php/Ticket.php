@@ -73,7 +73,7 @@
 		 * @param Ticket Das Ticket, das von der Nachfolgerliste dieses Tickets entfernt werden soll.
 		 */
 		public function removeNachfolger($nachfolger) {
-			$key = nachfolger->getID();
+			$key = $nachfolger->getID();
 
 			if(isset($this->mNachfolger["$key"]))
 				unset($this->mNachfolger["$key"]);

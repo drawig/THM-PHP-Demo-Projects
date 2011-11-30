@@ -8,12 +8,14 @@
 	
 	<?php
 		include('../php/DatabaseAdapter.php');
+		include('../php/Ticket.php');
 		
+				
 		if (isset($_POST['addticket']) && isset($_POST['projekt'])) {
 			$id = $_POST['projekt'];	
-			$projekt = DatabaseAdapter::getProjekt($id);
+			$projekt = DatabaseAdapter::getSingleProjekt($id);
 			
-			if (isset($_POST['titel']) && isset($_POST['beschreibung']) && isset($_POST['stunden']) && isset($_POST['vorgaenger'])) {
+			if (isset($_POST['titel']) && isset($_POST['beschreibung']) && isset($_POST['stunden'])) {
 				$titel = $_POST['titel'];
 				$beschreibung = $_POST['beschreibung'];
 				$stunden = $_POST['stunden'];
@@ -22,8 +24,9 @@
 				$vorgaenger = $_POST['vorgaenger'];
 			
 				$ticket = new Ticket(-1, $titel, $beschreibung, $stunden, -1, -1); //erste -1 aendern
-			
+
 				$result = DatabaseAdapter::addTicket($projekt, $ticket, $vorgaenger);
+				
 			}
 		}
 	
@@ -40,7 +43,8 @@
 			<input type="text" name="stunden"/><br/>
 			<h3>Vorgaenger (mit Kommata getrennt):</h3>
 			<input type="text" name="vorgaenger"/><br/>
-			<input type="submit" name="addticket" value="Ticket hinzufuegen"/>
+			<input type="hidden" name="projekt" value="1"/>
+			<input type="submit" name="addticket" value="Ticket hinzufuegen"/>		
 		</form>
 	</body>
 </html>
