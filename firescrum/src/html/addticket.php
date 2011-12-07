@@ -8,7 +8,7 @@
 	
 	<?php
 		include('../php/DatabaseAdapter.php');
-		include('../php/Ticket.php');
+	//	include('../php/Ticket.php');
 		
 				
 		if (isset($_POST['addticket']) && isset($_POST['projekt'])) {
@@ -19,11 +19,20 @@
 				$titel = $_POST['titel'];
 				$beschreibung = $_POST['beschreibung'];
 				$stunden = $_POST['stunden'];
+				
+				echo 'Ticket <b> '.$titel.' </b> wurde Projekt <b>'.$projekt->getTitel().'</b> mit der ID: <b>'.$projekt->getId().'</b>  hinzugefuegt';
+				
 			
 				//String an addTicket
 				$vorgaenger = $_POST['vorgaenger'];
 			
 				$ticket = new Ticket(-1, $titel, $beschreibung, $stunden, -1, -1); //erste -1 aendern
+				
+		/*		echo "<br>";
+				echo "Titel: ".$ticket->getTitel();
+				echo "Beschreibung: ".$ticket->getBeschreibung();
+		*/		
+				echo '<br><br><a href="projekte.php">Zurueck zur Projektuebersicht</a>';
 
 				$result = DatabaseAdapter::addTicket($projekt, $ticket, $vorgaenger);
 				
@@ -43,8 +52,9 @@
 			<input type="text" name="stunden"/><br/>
 			<h3>Vorgaenger (mit Kommata getrennt):</h3>
 			<input type="text" name="vorgaenger"/><br/>
-			<input type="hidden" name="projekt" value="1"/>
+			<input type="hidden" name="projekt" value="<?php echo $id; ?>"/>
 			<input type="submit" name="addticket" value="Ticket hinzufuegen"/>		
 		</form>
+		<a href="projekte.php">Zurueck zur Projektuebersicht</a>
 	</body>
 </html>

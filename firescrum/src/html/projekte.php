@@ -13,23 +13,32 @@
 			$projekte = DatabaseAdapter::getProjekte();
 
 			if($projekte != NULL) {
+			
+				echo '<a href="index.php">Zurueck zur Startseite</a><br><br>';
 				foreach($projekte as $value) {
 					$titel = $value->getTitel();
 					$beschreibung = $value->getBeschreibung();
 					$id = $value->getId();
-
+					
+					
 					echo "<h3>$titel</h3>
 						$beschreibung<br/>" .
-						'<form method="post">
+						'
 							<form method="post" action="showtickets.php">
 								<input type="submit" name="showtickets" value="Zeige Tickets"/><br/>
+								<input name="projekt" type="hidden" value="' . $id . '"/>
 							</form>
 							<form method="post" action="addticket.php">
-								<input type="submit" name="addticket" value="Ticket hinzufügen"/><br/>
+								<input type="submit" name="addticket" value="Ticket hinzufuegen"/><br/>
+								<input name="projekt" type="hidden" value="' . $id . '"/>
 							</form>
-							<input name="projekt" type="hidden" value="' . $id . '"/>
-						</form>';
+							<form method="post" action="showgantt.php">
+								<input type="submit" name="showgantt" value="Zeige Gantt-Diagramm"/><br/>
+								<input name="projekt" type="hidden" value="' . $id . '"/>
+							</form>
+							';
 				}
+				echo '<br><br><a href="index.php">Zurueck zur Startseite</a><br><br>';
 			}
 		?>
 	</body>

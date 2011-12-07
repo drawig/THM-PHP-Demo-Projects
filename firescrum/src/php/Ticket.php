@@ -130,7 +130,7 @@
 		 * @return array Alle Nachfolger dieses Tickets.
 		 */
 		public function getNachfolger() {
-			$this->mNachfolger;
+			return $this->mNachfolger;
 		}
 	}
 ?>

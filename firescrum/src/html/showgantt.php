@@ -3,10 +3,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
 	<head>
-		<title>Firescrum - Tickets</title>
+		<title>Firescrum - Gantt-Diagramm</title>
 	</head>
 	<body>
-		<h1>Tickets zum Projekt</h1>
+		<h1>Gantt-Diagramm zum Projekt</h1>
 		<?php
 			include('../php/DatabaseAdapter.php');
 

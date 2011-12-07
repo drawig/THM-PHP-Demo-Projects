@@ -1,6 +1,7 @@
 <?php
 
 	include('Projekt.php');
+	include('Ticket.php');
 
 	/**
 	 * Diese Klasse bietet Funktionen, mit denen von Firescrum häufig durchgeführte Datenbank-Zugriffe
@@ -9,8 +10,8 @@
 	class DatabaseAdapter {
 
 		//Hier richtige Daten eingeben.
-		private static $mDBHost = "";
-		private static $mDBUser = "";
+		private static $mDBHost = "localhost";
+		private static $mDBUser = "root";
 		private static $mDBPassword = "";
 
 		/**
@@ -62,7 +63,7 @@
 				
 		//		$ticketId = $ticket->getID(); //hier noch -1
 				$ticketTitel = $ticket->getTitel();
-				$ticketBechreibung = $ticket->getBeschreibung();
+				$ticketBeschreibung = $ticket->getBeschreibung();
 				$ticketStunden = $ticket->getStunden();
 				
 				$ticketVorgaenger = array();			
@@ -96,25 +97,21 @@
 						
 						if($i == 0) {
 							$tempArray[$key] = $value;
+							//Aktuelle ID vom neuen Ticket
+							$ticketID = $tempArray['id'];
 						}
 						$i = 1;
 					}
-					//Aktuelle ID vom neuen Ticket
-					$ticketID = $tempArray['id'];
-					
 				}
 					
 				
-
-				if(!$returnTicket) {
-					$dbh = NULL;
-					return NULL;
-				}
-
-				if (count($vorgaenger) == 0) {
+				if (count($vorgaenger) != 0) {
 				//String auslesen und zahlen im array speichern 	
 				$zahlen = split('[,]', $vorgaenger);
 
+
+				//Zahlen stehen korrekt im Array 
+				
 				foreach ($zahlen as $id) {
 					$sth = $dbh->prepare("INSERT INTO graphknoten(vorgaenger, nachfolger) VALUES(?, ?);");
 				
@@ -122,9 +119,18 @@
 					$sth->bindParam(2, $ticketID);
 			
 					$sth->execute();
+					
+					$return = $sth->fetch(); //No need o_O
+					
 				}
 				
 				}
+				
+				if(!$returnTicket) {
+					$dbh = NULL;
+					return NULL;
+				}
+
 				
 				$dbh = NULL;
 				
@@ -238,6 +244,7 @@
 				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
 				$tickets = array();
 
+		
 				$sth = $dbh->prepare("SELECT * FROM tickets WHERE pid=?;");
 				$sth->bindParam(1, $projektId);
 
@@ -259,7 +266,8 @@
 					foreach($entry as $key => $value) {
 						$tempArray[$key] = $value;
 					}
-
+					
+					//Nachfolger raussuchen
 					$sth = $dbh->prepare("SELECT * FROM graphknoten WHERE nachfolger=?;");
 					$sth->bindParam(1, $tempArray['id']);
 					
@@ -271,6 +279,28 @@
 					foreach($ergebnis as $entry)
 						$vorgaengerIds[] = $entry['vorgaenger'];
 
+						
+					
+	/*				$nachfolgerIds = array();
+					
+					$sth = $dbh->prepare("SELECT * FROM graphknoten;");
+					
+					$sth->execute();
+						
+					$returnn = $sth->fetchAll(); //hier weiter .....
+						
+					foreach($returnn as $entry) {
+
+
+						echo $entry.' '.$returnn['nachfolger'].' <br>';
+						$nachfolgerIds[] = $returnn['nachfolger'];
+						
+						print_r($nachfolgerIds);
+						
+					}
+						
+	*/					
+					
 					$sth = $dbh->prepare("SELECT * FROM graphknoten WHERE vorgaenger=?;");
 					$sth->bindParam(1, $tempArray['id']);
 					
@@ -278,10 +308,12 @@
 
 					$ergebnis = $sth->fetchAll();
 					$nachfolgerIds = array();
-
+		
 					foreach($ergebnis as $entry)
-						$nachfolgerIds[] = $entry['nachfolger'];
-
+						$nachfolgerIds[] = $entry['nachfolger']; 
+				
+			//		echo "teeeeeeeest";
+	
 					$ticket = new Ticket($tempArray['id'], $tempArray['titel'], $tempArray['beschreibung'], $tempArray['stunden'], $vorgaengerIds, $nachfolgerIds);
 					$tickets[] = $ticket;
 					
