@@ -340,6 +340,8 @@
 		*/
 		public static function getTicket($id) {
 			try {
+			
+		//		echo "hieeer";
 				$dbHost = DatabaseAdapter::$mDBHost;
 				$dbh = new PDO("mysql:host=$dbHost;dbname=firescrum", DatabaseAdapter::$mDBUser, DatabaseAdapter::$mDBPassword); 
 
@@ -351,11 +353,11 @@
 
 				$return = $sth->fetch();
 
-				if(!$return) {
+		/*		if(!$return) {
 					$dbh = NULL;
 					return NULL;
 				}
-
+		*/
 
 				$id = $return['id'];
 				$pid = $return['pid']; //TODO pid?

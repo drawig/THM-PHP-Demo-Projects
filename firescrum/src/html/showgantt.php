@@ -15,7 +15,103 @@
 			
 		echo	'<canvas id="gantt1" height="300" width="850" style="cursor: default;">[No canvas support]</canvas>';
 
+		//Startzeiten der 6 Tasks nacheinander
+		$startzeiten = array();
+		$duration = array();
+		$next = array();
+		
+		if(isset($_POST['projekt'])) {
+				$tickets = DatabaseAdapter::getTickets($_POST['projekt']);
 
+				echo '<br><br><a href="projekte.php">Zurueck zur Projektuebersicht</a>';
+			if ($tickets != NULL) {		
+				$nextStart = 0;
+				$i = 0;
+				foreach($tickets as $ticket) {
+					$id = $ticket->getId();
+					$titel = $ticket->getTitel();
+					$stunden = $ticket->getStunden();
+					$beschreibung = $ticket->getBeschreibung();
+					$vorgaenger = $ticket->getVorgaenger();
+					$nachfolger = $ticket->getNachfolger();
+					
+					$duration[$i++] = $stunden;
+						
+			//		echo '<br><br>'.$id.'   '.$stunden;
+						
+
+						$temp = $id;
+						$tempzeit = 0;
+						$tempZeitEintragen = 0;
+						$flag = 1;
+						//Alle Vorgaenger durchlaufen
+						foreach($vorgaenger as $value) {
+					//		echo '<br>'.$value.' <--<br>';
+							
+							//Wenn es keinen Vorgaenger gibt, setzte StartZeit auf 0
+							if ($value == 0) {
+								$tempZeitEintragen = 0;
+								$next[] = 0;
+								$next[] = $duration[$i-1];
+								$nextStart = $duration[$i-1];
+				//				echo '<br>NEXTSTART: -'.$nextStart.'-<br>';
+								
+							} else {
+								$nextStart = $nextStart+$duration[$i-1];
+								$next[] = $nextStart;
+				//				echo '<br>NEXTSTART: -'.$nextStart.'-<br>';
+								//Temporaer Tickets auslesen und Zeiten checken
+								$tempTicket = DatabaseAdapter::getTicket($temp);
+								$tempZeit = $tempTicket->getStunden();
+				//				echo 'TempZeit-> '.$tempZeit.'<-<br>';
+								//Hoechtsen Zeitaufwand festhalten
+								if ($tempZeit > $tempZeitEintragen) {
+									$tempZeitEintragen = $nextStart;
+								}
+
+						
+						
+								if ($value > $temp) {
+									$temp = $value;
+								}
+							
+							}
+							
+						}
+						$startzeiten[] = $tempZeitEintragen;
+						
+					/*	if ($temp == 0) {
+							$startzeiten[] = 0;
+						} else {
+							$tempTicket = DatabaseAdapter::getTicket($temp);
+							$tempZeit = $tempTicket->getStunden();
+							$startzeiten[] = $tempZeit;
+						}
+					*/
+				}
+				
+	/*			echo '<br>next:<br>';
+				echo '<pre>';
+				print_r($next);
+				echo '</pre>';
+				
+				
+				echo '<br>Start-Vorgaenger:<br>';
+				echo '<pre>';
+				print_r($startzeiten);
+				echo '</pre>';
+				
+				echo '<br>Stunden:<br>';
+				echo '<pre>';
+				print_r($duration);
+				echo '</pre>';
+	*/			
+				echo '<br><br><a href="projekte.php">Zurueck zur Projektuebersicht</a>';
+				
+			}
+		}
+			
+			
 	/* Example Project 	*/
 	
 	/* 								Duration		Start	End
@@ -27,9 +123,25 @@
 		6. Last Testing + Release		15h			26		41
 	
 	/* Max Stunden */
-	$max = 41;
+//	$max = 41;
+	$max = $next[5]+50; //TODO
 
-	$task1start = 0;	
+	$task1start = $next[0];	
+	$task2start = $next[1];	
+	$task3start = $next[2];	
+	$task4start = $next[3];	
+	$task5start = $next[4];	
+	$task6start = $next[5];
+	
+	$task1dur = $duration[0];
+	$task2dur = $duration[1];
+	$task3dur = $duration[2];
+	$task4dur = $duration[3];
+	$task5dur = $duration[4];
+	$task6dur = $duration[5];
+	
+	
+/*	$task1start = 0;	
 	$task2start = 0;	
 	$task3start = 6;	
 	$task4start = 16;	
@@ -42,7 +154,7 @@
 	$task4dur = 5;
 	$task5dur = 5;
 	$task6dur = 15;
-	
+*/	
 	
 	?>
 	
@@ -97,7 +209,7 @@
 <?php
 
 //-------------------------------------------------------------------------------------------------
-
+/*
 			if(isset($_POST['projekt'])) {
 				$tickets = DatabaseAdapter::getTickets($_POST['projekt']);
 
@@ -140,6 +252,8 @@
 				
 			}
 			}
+			
+*/
 		?>
 	</body>
 </html>
